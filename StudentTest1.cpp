@@ -522,7 +522,9 @@ TEST_SUITE("Battle simulations") {
 
         // At this point, the captain should be team2_c3; hence, the next enemy to be attacked by team2 should team_c3.
         multi_attack(6, team2, team1);
-        CHECK((!team_c3->isAlive() && team_c1->isAlive() && team_c2->isAlive()));
+      CHECK((!team_c3->isAlive() && team_c1->isAlive() && team_c2->isAlive()));
+
+
 
 
         // Killing the new captain

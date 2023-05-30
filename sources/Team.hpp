@@ -30,7 +30,7 @@ namespace ariel {
 
         const std::vector<Character *> &getFighters() const;
 
-        ~Team();
+         virtual ~Team();
 
         void add(Character *fighter);
 

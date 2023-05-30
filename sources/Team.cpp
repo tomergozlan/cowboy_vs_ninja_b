@@ -113,6 +113,9 @@ namespace ariel {
         Character *victim = findClosestCharacter(this->leader->getLocation(), enemyTeam->getFighters());
 
         for (Character *attacker: fighters) {
+            if (!victim->isAlive()) {
+                victim = findClosestCharacter(leader->getLocation(), enemyTeam->getFighters());
+            }
             if (attacker->isAlive() && victim->isAlive()) {
                 if (Cowboy *cowboy = dynamic_cast<Cowboy *>(attacker)) {
                     if (cowboy->hasboolets()) {
@@ -125,17 +128,18 @@ namespace ariel {
             if (this->stillAlive() == 0 || enemyTeam->stillAlive() == 0) {
                 return;
             }
-            if (!victim->isAlive()) {
-                victim = findClosestCharacter(leader->getLocation(), enemyTeam->getFighters());
-            }
+
             if (!enemyTeam->leader->isAlive()) {
                 Point enemyLeaderLocation = enemyTeam->leader->getLocation();
                 Character *enemyNewLeader;
-                enemyNewLeader = findClosestCharacter(enemyLeaderLocation, this->getFighters());
+                enemyNewLeader = findClosestCharacter(enemyLeaderLocation, enemyTeam->getFighters());
                 enemyTeam->leader = enemyNewLeader;
             }
         }
         for (Character *attacker: fighters) {
+            if (!victim->isAlive()) {
+                victim = findClosestCharacter(leader->getLocation(), enemyTeam->getFighters());
+            }
             if (attacker->isAlive() && victim->isAlive()) {
                 if (Ninja *ninja = dynamic_cast<Ninja *>(attacker)) {
                     double distance = ninja->getLocation().distance(victim->getLocation());
@@ -149,13 +153,10 @@ namespace ariel {
             if (this->stillAlive() == 0 || enemyTeam->stillAlive() == 0) {
                 return;
             }
-            if (!victim->isAlive()) {
-                victim = findClosestCharacter(leader->getLocation(), enemyTeam->getFighters());
-            }
             if (!enemyTeam->leader->isAlive()) {
                 Point enemyLeaderLocation = enemyTeam->leader->getLocation();
                 Character *enemyNewLeader;
-                enemyNewLeader = findClosestCharacter(enemyLeaderLocation, this->getFighters());
+                enemyNewLeader = findClosestCharacter(enemyLeaderLocation, enemyTeam->getFighters());
                 enemyTeam->leader = enemyNewLeader;
             }
         }
