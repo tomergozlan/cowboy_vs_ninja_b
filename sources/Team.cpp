@@ -52,6 +52,7 @@ namespace ariel {
  * @brief Adds a fighter to the team.
  * @param fighter Pointer to the fighter to be added.
  * @throws std::invalid_argument If the fighter pointer is invalid or the team already has ten fighters.
+ * @throws std:runtime_error If the character is already in some team and if there are more then 10 fighters in team.
  */
     void Team::add(Character *fighter) {
         if (!fighter) {
@@ -61,7 +62,7 @@ namespace ariel {
             throw std::runtime_error("Error: The character is already in some team.");
         }
         if (this->fighters.size() >= 10) {
-            throw std::invalid_argument("Error: The team cannot have more than ten fighters.");
+            throw std::runtime_error("Error: The team cannot have more than ten fighters.");
         }
         this->fighters.push_back(fighter);
         fighter->setTeamMember(true);
@@ -114,7 +115,7 @@ namespace ariel {
         for (Character *attacker: fighters) {
             if (attacker->isAlive() && victim->isAlive()) {
                 if (Cowboy *cowboy = dynamic_cast<Cowboy *>(attacker)) {
-                    if (cowboy->hasBullets()) {
+                    if (cowboy->hasboolets()) {
                         cowboy->shoot(victim);
                     } else {
                         cowboy->reload();
@@ -175,11 +176,14 @@ namespace ariel {
         return counter;
     }
 
+    void Team::setLeader(ariel::Character *newLeader) {
+        this->leader=newLeader;
+    }
 /**
 * @brief Prints the details of all the fighters in the team.
 * Prints the details, such as the name, hit points, and location, of all the fighters in the team.
 */
-    void Team::print() const {
+    void Team::print()  {
         std::cout << "---------------------" << std::endl;
         std::cout << "Team " << this->leader->getName() << std::endl;
         std::cout << "---------------------" << std::endl;

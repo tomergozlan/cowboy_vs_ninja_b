@@ -7,6 +7,11 @@
 
 #include "Point.hpp"
 #include "Character.hpp"
+#include "Ninja.hpp"
+#include "OldNinja.hpp"
+#include "TrainedNinja.hpp"
+#include "YoungNinja.hpp"
+#include "Cowboy.hpp"
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -31,11 +36,13 @@ namespace ariel {
 
         Character *findClosestCharacter(const Point &location, const std::vector<Character *> &fighters) const;
 
-        void attack(Team *enemyTeam);
+        virtual void attack(Team *enemyTeam);
 
         int stillAlive() const;
 
-        void print() const;
+        void setLeader(Character* newLeader);
+
+        virtual void print() ;
 
         // Make tidy make me write this
         Team(const Team &) = delete;

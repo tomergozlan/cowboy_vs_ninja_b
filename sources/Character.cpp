@@ -16,13 +16,10 @@ namespace ariel {
  * @throw std::invalid_argument if the name is empty or if the location coordinates are negative.
  * @throw std::out_of_range If the hit points is over or under the range of 0-150.
  */
-    Character::Character(const std::string& name, const ariel::Point& location, const int &hitPoints):
-            location(location) ,hitPoints(hitPoints) , name(name), teamMember(false){
+    Character::Character(const std::string &name, const ariel::Point &location, const int &hitPoints) :
+            location(location), hitPoints(hitPoints), name(name), teamMember(false) {
         if (name.empty()) {
             throw std::invalid_argument("Error: Name cannot be empty.");
-        }
-        if (this->location.getX() < 0.0 || this->location.getY() < 0.0) {
-            throw std::invalid_argument("Error: Location coordinates cannot be negative.");
         }
         if (hitPoints < 0.0 || hitPoints > 150.0) {
             throw std::out_of_range("Error: hitPoints out of bounds.");
@@ -30,7 +27,7 @@ namespace ariel {
         this->location = location;
         this->hitPoints = hitPoints;
         this->name = name;
-        this->teamMember= false;
+        this->teamMember = false;
     }
 
 /**
@@ -39,10 +36,10 @@ namespace ariel {
  * @throws std::invalid_argument if the provided hit points value is negative.
  */
     void Character::setHitPoints(int NewHitPoints) {
-        if(NewHitPoints < 0){
+        if (NewHitPoints < 0) {
             throw std::invalid_argument("Error: Hit points must be a non-negative value.");
         }
-        if(NewHitPoints > 150){
+        if (NewHitPoints > 150) {
             throw std::out_of_range("Error:hitPoints out of bounds.");
         }
         this->hitPoints = NewHitPoints;
@@ -125,15 +122,17 @@ namespace ariel {
     void Character::setTeamMember(bool newTeamMember) {
         this->teamMember = newTeamMember;
     }
+
 /**
  * @brief Generates a string representation of the Character.
  * @return A string representation of the Character, including the name, hit points, and location.
  */
     std::string Character::print() const {
-        std::string characterInfo = "name: "+name + ", HitPoints: "+ std::to_string(hitPoints)  + ", location: ";
+        std::string characterInfo = "name: " + name + ", HitPoints: " + std::to_string(hitPoints) + ", location: ";
         characterInfo += location.print();
         return characterInfo;
     }
+
 /**
  * @brief Setter for the location of the character.
  * @param newLocation The new location to set
@@ -145,153 +144,4 @@ namespace ariel {
         }
         this->location = newLocation;
     }
-
-/// Cowboy class - defines the Cowboys class, derived from the Character class.
-
-/**
-* @brief Constructor for the Cowboy class.
-* @param name The name of the cowboy.
-* @param location The location of the cowboy on the game board.
-* @throws std::invalid_argument if the name is empty.
-* @throw std::out_of_range if the hit points over 110 or less then 0.
-*/
-    Cowboy::Cowboy(const std::string& name, const ariel::Point& location) : Character(name, location, 110) {
-        if (name.empty()) {
-            throw std::invalid_argument("Error: Name cannot be empty.");
-        }
-        if (this->getHitPoints() < 0 || this->getHitPoints() > 110) {
-            throw std::out_of_range("Error: hitPoints of Cowboy out of bounds.");
-        }
-        this->bullets = 6;
-    }
-
-/**
- * @brief Shoots the enemy character, causing damage and consuming a bullet.
- * @param enemy A pointer to the enemy character to shoot.
- * @throw std::invalid_argument If the enemy pointer is nullptr.
- * @throw std::runtimer_error If cowboy try shoot himself.
- * @throw std::out_of_range If the cowboy is out of bullets.
- * @throw std::runtime_error If the enemy is already dead.
- */
-    void Cowboy:: shoot(Character *other){
-        if(other==nullptr)
-            throw std::invalid_argument ("error: enemey can't be null");
-        if(this == other)
-            throw std::runtime_error ("error: can't shoot myself");
-        if(!(this->isAlive()) || !(other->isAlive()))
-            throw std::runtime_error ("error: me or enemy - already dead");
-        if(this->hasBullets()){
-            this->bullets--;
-            other->hit(10);
-        }
-    }
-
-    /**
-    * @brief Checks if the cowboy has bullets left.
-    * @return True if the cowboy has bullets, false otherwise.
-    */
-    bool Cowboy::hasBullets() const {
-        return (this->bullets>0);
-    }
-
-/**
- * @brief Reloads the cowboy's gun with six new bullets.
- * @throw std::runtimer_error If the cowboy is not alive and try to reload.
- */
-    void Cowboy::reload() {
-        if (!(this->isAlive())) {
-            throw std::runtime_error("Error: Cowboy is not alive. Cannot reload.");
-        }
-        this->bullets = 6;
-    }
-
-/**
- * @brief Retrieves the number of bullets the Cowboy has.
- * @return The number of bullets the Cowboy has.
- */
-    int Cowboy::getBullets() const {
-        return this->bullets;
-    }
-
-/**
- * @brief Prints the information about the cowboy.
- * This function prints the name, hit points, and location of the cowboy.
- * @note If the cowboy is dead, the hit points and location will not be printed.
- */
-    std::string Cowboy::print() const {
-        return "C, " + Character::print();
-    }
-
-/// Ninja class - defines the Ninja class, derived from the Character class.
-
-/**
- * @brief Constructor for the Ninja class.
- * @param name The name of the ninja.
- * @param location The initial location of the ninja.
- * @param speed The speed of the ninja.
- * @param hitPoints The hit points of the ninja.
- */
-    Ninja::Ninja(const std::string& name, const Point& location, int speed , int hitPoints) : Character(name, location,hitPoints) , speed(speed) {
-        if (speed < 0) {
-            throw std::invalid_argument("Error: Speed cannot be negative.");
-        }
-        if (hitPoints < 0) {
-            throw std::invalid_argument("Error: Hit points cannot be negative.");
-        }
-        this->speed = speed;
-    }
-/**
- * @brief Moves the Ninja towards the enemy by a distance equal to its speed.
- * @param enemy A pointer to the enemy Character.
- * @throws std::invalid_argument If the enemy pointer is invalid or the distance is invalid.
- */
-
-    void Ninja::move(ariel::Character *enemy) {
-        if (!enemy) {
-            throw std::invalid_argument("Error: Invalid pointer to enemy character.");
-        }
-        if (!isAlive()) {
-            return;
-        }
-        double distance = getLocation().distance(enemy->getLocation());
-        if (distance <= 0) {
-            throw std::invalid_argument("Error: Invalid distance to enemy.");
-        }
-        double movement = this->speed;
-        if (movement > distance) {
-            movement = distance;
-        }
-        Point newLocation = Point::moveTowards(getLocation(), enemy->getLocation(), movement);
-        setLocation(newLocation);
-    }
-/**
- * @brief Performs a slash attack on the enemy character.
- * @param enemy A pointer to the enemy character.
- * @throws std::invalid_argument if the enemy pointer is invalid.
- * @throws std::runtime_error if the ninja is already dead or the ninja try to slash himself.
- */
-    void Ninja::slash(ariel::Character *enemy) {
-        if (!enemy) {
-            throw std::invalid_argument("Error: Invalid pointer to enemy character.");
-        }
-        if(this==enemy){
-            throw std::runtime_error("Error: Ninja can't slash himself.");
-        }
-        if (!isAlive() || !(enemy->isAlive())) {
-            throw std::runtime_error("Error: Ninja is already dead.");
-        }
-        double distance = getLocation().distance(enemy->getLocation());
-        if (distance < 1) {
-            enemy->hit(40);
-        }
-    }
-
-/**
- * @brief Generates a string representation of the Ninja.
- * @return A string representation of the Ninja.
- */
-    std::string Ninja::print() const {
-        return " N, " + Character::print();
-    }
-
 }
