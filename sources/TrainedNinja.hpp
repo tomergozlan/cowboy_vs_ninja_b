@@ -1,6 +1,9 @@
-//
-// Created by tomergozlan on 5/30/23.
-//
+/**
+ * @file TrainedNinja.hpp
+ * @brief Contains the declaration of the TrainedNinja class.
+ * @author Tomer Gozlan
+ * @date 23/05/23
+ */
 
 #ifndef COWBOY_VS_NINJA_B_TRAINEDNINJA_HPP
 #define COWBOY_VS_NINJA_B_TRAINEDNINJA_HPP

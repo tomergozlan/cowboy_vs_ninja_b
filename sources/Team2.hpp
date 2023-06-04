@@ -1,6 +1,9 @@
-//
-// Created by tomergozlan on 5/30/23.
-//
+/**
+ * @file Team2.hpp
+ * @brief Contains the declaration of the Team2 class.
+ * @date 15/05/23
+ * @author Tomer Gozlan
+ */
 
 #ifndef COWBOY_VS_NINJA_B_TEAM2_HPP
 #define COWBOY_VS_NINJA_B_TEAM2_HPP

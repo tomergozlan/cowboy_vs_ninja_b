@@ -1,7 +1,7 @@
 /**
  * @file Character.hpp
  * @brief Defines the Character class and its subclasses Cowboy, Ninja, YoungNinja, TrainedNinja, and OldNinja.
- * @author Tomer Gozlan
+ * @author Tomer Gozlan.
  * @date 15/05/2023
  */
 

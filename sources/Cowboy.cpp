@@ -1,6 +1,11 @@
-//
-// Created by tomergozlan on 5/29/23.
-//
+/**
+ * @class Cowboy
+ * @brief Represents a cowboy character in the game.
+ * The Cowboy class is a derived class of the Character class. It represents a cowboy character with
+ * shooting abilities. It has a limited number of bullets and can shoot enemies to cause damage.
+ * @author Tomer Gozlan.
+ * @date 15/05/2023
+ */
 
 #include "Cowboy.hpp"
 

@@ -1,6 +1,9 @@
-//
-// Created by Tomer Gozlan on 16/05/2023.
-//
+/**
+ * @file Team.hpp
+ * @brief Contains the declaration of the Team class.
+ * @date 15/05/23
+ * @author Tomer Gozlan
+ */
 
 #ifndef COWBOY_VS_NINJA_A_TEAM_HPP
 #define COWBOY_VS_NINJA_A_TEAM_HPP

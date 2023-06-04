@@ -2,7 +2,7 @@
  * @file character.cpp
  * @brief Implements the Character class and its derived classes.
  * @author Tomer Gozlan
- * @date 15/05/2023
+ * @date 16/05/2023
  */
 
 #include "Character.hpp"

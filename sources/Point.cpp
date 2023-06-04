@@ -2,7 +2,7 @@
  * @file Point.cpp
  * @brief A class for representing a position on a 2D game board.
  * @author Tomer Gozlan
- * @date 11/05/2023
+ * @date 12/05/2023
  */
 
 #include "Point.hpp"

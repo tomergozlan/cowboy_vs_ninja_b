@@ -3,7 +3,7 @@
  * @brief Header file for the Point class - A class that will help us save a position on the game board.
  * The position is given as two double coordinates that keep the position of the unit along the x and y axes accordingly.
  * @author Tomer Gozlan
- * @date 11/05/2023 
+ * @date 12/05/2023
  */
 
 #ifndef COWBOY_VS_NINJA_A_POINT_HPP

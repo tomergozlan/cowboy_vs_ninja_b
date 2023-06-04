@@ -1,10 +1,11 @@
 /**
  * @file Team.cpp
- * @brief Represents a group of fighters, consisting of ninjas and warriors.
+ * @brief Represents a group of fighters, consisting of ninjas and cowboys.
  * This class is a group of up to ten fighters, where a fighter can be a ninja or a warrior.
  * Each group is assigned a leader who is one of the fighters. When a group is created, it gets a leader pointer.
+ * @note The order in attack,print , compering is first cowboys then ninja.
  * @author Tomer Gozlan
- * @date 16/05/2023
+ * @date 15/05/2023
  */
 
 #include "Team.hpp"

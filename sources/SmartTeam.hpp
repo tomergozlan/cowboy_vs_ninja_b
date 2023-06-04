@@ -1,6 +1,9 @@
-//
-// Created by tomergozlan on 6/1/23.
-//
+/**
+ * @file SmartTeam.hpp
+ * @brief Header file for the SmartTeam class .
+ * @author Tomer Gozlan
+ * @date 17/05/2023
+ */
 
 #ifndef COWBOY_VS_NINJA_B_SMARTTEAM_HPP
 #define COWBOY_VS_NINJA_B_SMARTTEAM_HPP
@@ -27,7 +30,6 @@ namespace ariel {
         Point askEnemyLocation(Character* enemy);
 
         int askEnemyHitPoints(Character* enemy);
-
 
         void attack(Team *enemyTeam) override;
 

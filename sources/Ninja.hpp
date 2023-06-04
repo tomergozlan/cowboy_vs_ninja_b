@@ -1,3 +1,11 @@
+/**
+ * @file Ninja.hpp
+ * @brief Represents a ninja character in the game.
+ * The Ninja class is a derived class of the Character class. It represents a ninja character with
+ * fast movement and slashing abilities. It can move towards an enemy and perform a powerful slash attack.
+ * @author Tomer Gozlan
+ * @date 16/05/2023
+ */
 
 #ifndef COWBOY_VS_NINJA_B_NINJA_HPP
 #define COWBOY_VS_NINJA_B_NINJA_HPP
@@ -24,6 +32,5 @@ namespace ariel {
 
     };
 }
-
 
 #endif //COWBOY_VS_NINJA_B_NINJA_HPP

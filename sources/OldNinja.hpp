@@ -1,6 +1,9 @@
-//
-// Created by tomergozlan on 5/30/23.
-//
+/**
+ * @file OldNinja.hpp
+ * @brief Contains the declaration of the OldNinja class.
+ * @author Tomer Gozlan
+ * @date 23/05/23
+ */
 
 #ifndef COWBOY_VS_NINJA_B_OLDNINJA_HPP
 #define COWBOY_VS_NINJA_B_OLDNINJA_HPP

@@ -1,6 +1,9 @@
-//
-// Created by tomergozlan on 5/29/23.
-//
+/**
+ * @file Ninja.cpp
+ * @brief Implementation of the Ninja class
+ * @date 5/29/23
+ * @author Tomer Gozlan
+ */
 
 #include "Ninja.hpp"
 

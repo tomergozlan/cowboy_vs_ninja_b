@@ -1,6 +1,9 @@
-//
-// Created by tomergozlan on 5/29/23.
-//
+/**
+ * @file YoungNinja.hpp
+ * @brief Contains the declaration of the YoungNinja class.
+ * @author Tomer Gozlan
+ * @date 23/05/23
+ */
 
 #ifndef COWBOY_VS_NINJA_B_YOUNGNINJA_HPP
 #define COWBOY_VS_NINJA_B_YOUNGNINJA_HPP
