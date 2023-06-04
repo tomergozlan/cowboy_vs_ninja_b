@@ -33,6 +33,7 @@ namespace ariel {
         if (!c1IsNinja && c2IsNinja) {
             return false;
         }
+        return false;
     }
 
 /**
@@ -91,8 +92,8 @@ namespace ariel {
         }
 
         // Check if the leader of the attacking team is alive
-        if (!(this->leader->isAlive())) {
-            Point leaderLocation = this->leader->getLocation();
+        if (!(getLeader()->isAlive())) {
+            Point leaderLocation = getLeader()->getLocation();
             Character *newLeader = findClosestCharacter(leaderLocation, this->getFighters());
             this->setLeader(newLeader);
         }
@@ -145,37 +146,57 @@ namespace ariel {
                 // Count the number of cowboys and ninjas
                 if (Cowboy *cowboy = dynamic_cast<Cowboy *>(attacker)) {
                     cowboyCounter++;
-                } else if (Ninja *ninja = dynamic_cast<Ninja *>(attacker)) {
-                    ninjaDamage++;
-                }
 
-                // Calculate the cowboy damage based on the number of cowboys
-                cowboyDamage = cowboyCounter * 10;
+                    // Calculate the cowboy damage based on the number of cowboys
+                    cowboyDamage = cowboyCounter * 10;
 
-                if (attacker->isAlive() && victim->isAlive()) {
-                    Point victimLocation = askEnemyLocation(victim);
-                    int victimHitPoints = askEnemyHitPoints(victim);
+                    if (attacker->isAlive() && victim->isAlive()) {
+                        Point victimLocation = askEnemyLocation(victim);
+                        int victimHitPoints = askEnemyHitPoints(victim);
 
-                    if (victimHitPoints <= cowboyDamage) {
+                        if (victimHitPoints <= cowboyDamage) {
 
-                        // Loop while there are cowboys left to attack
-                        while (cowboyCounter) {
+                            // Loop while there are cowboys left to attack
+                            while (cowboyCounter) {
 
+                                if (Cowboy *cowboy = dynamic_cast<Cowboy *>(attacker)) {
+                                    if (cowboy->hasboolets()) {
+                                        cowboy->shoot(victim);
+                                    } else {
+                                        cowboy->reload();
+                                    }
+
+                                    cowboyCounter--;
+
+                                    // Get the next character from the priority queue as the new victim if the current victim is eliminated
+                                    if (!victim->isAlive()) {
+                                        victim = priorityTarget.top();
+                                        priorityTarget.pop();
+                                    }
+
+                                } else if (Ninja *ninja = dynamic_cast<Ninja *>(attacker)) {
+
+                                    int victimDistance = ninja->getLocation().distance(askEnemyLocation(victim));
+
+                                    if (victimDistance < 1) {
+                                        ninja->slash(victim);
+                                    } else {
+                                        // Move the ninja towards the victim if the distance minus the average speed is greater than or equal to 1
+                                        if (victimDistance - averageSpeed >= 1) {
+                                            ninja->move(victim);
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+
+                            // Attack the victim without considering safe distance for ninjas
                             if (Cowboy *cowboy = dynamic_cast<Cowboy *>(attacker)) {
                                 if (cowboy->hasboolets()) {
                                     cowboy->shoot(victim);
                                 } else {
                                     cowboy->reload();
                                 }
-
-                                cowboyCounter--;
-
-                                // Get the next character from the priority queue as the new victim if the current victim is eliminated
-                                if (!victim->isAlive()) {
-                                    victim = priorityTarget.top();
-                                    priorityTarget.pop();
-                                }
-
                             } else if (Ninja *ninja = dynamic_cast<Ninja *>(attacker)) {
 
                                 int victimDistance = ninja->getLocation().distance(askEnemyLocation(victim));
@@ -190,47 +211,25 @@ namespace ariel {
                                 }
                             }
                         }
-                    } else {
 
-                        // Attack the victim without considering safe distance for ninjas
-                        if (Cowboy *cowboy = dynamic_cast<Cowboy *>(attacker)) {
-                            if (cowboy->hasboolets()) {
-                                cowboy->shoot(victim);
-                            } else {
-                                cowboy->reload();
-                            }
-                        } else if (Ninja *ninja = dynamic_cast<Ninja *>(attacker)) {
-
-                            int victimDistance = ninja->getLocation().distance(askEnemyLocation(victim));
-
-                            if (victimDistance < 1) {
-                                ninja->slash(victim);
-                            } else {
-                                // Move the ninja towards the victim if the distance minus the average speed is greater than or equal to 1
-                                if (victimDistance - averageSpeed >= 1) {
-                                    ninja->move(victim);
-                                }
-                            }
+                        // Check if either team has been completely eliminated
+                        if (this->stillAlive() == 0 || enemyTeam->stillAlive() == 0) {
+                            return;
                         }
-                    }
 
-                    // Check if either team has been completely eliminated
-                    if (this->stillAlive() == 0 || enemyTeam->stillAlive() == 0) {
-                        return;
-                    }
+                        // Get the next character from the priority queue as the new victim if the current victim is eliminated
+                        if (!victim->isAlive()) {
+                            victim = priorityTarget.top();
+                            priorityTarget.pop();
+                        }
 
-                    // Get the next character from the priority queue as the new victim if the current victim is eliminated
-                    if (!victim->isAlive()) {
-                        victim = priorityTarget.top();
-                        priorityTarget.pop();
-                    }
-
-                    // Check if the enemy team's leader is not alive
-                    if (!enemyTeam->getLeader()->isAlive()) {
-                        Point enemyLeaderLocation = enemyTeam->getLeader()->getLocation();
-                        Character *enemyNewLeader;
-                        enemyNewLeader = findClosestCharacter(enemyLeaderLocation, this->getFighters());
-                        enemyTeam->setLeader(enemyNewLeader);
+                        // Check if the enemy team's leader is not alive
+                        if (!enemyTeam->getLeader()->isAlive()) {
+                            Point enemyLeaderLocation = enemyTeam->getLeader()->getLocation();
+                            Character *enemyNewLeader;
+                            enemyNewLeader = findClosestCharacter(enemyLeaderLocation, this->getFighters());
+                            enemyTeam->setLeader(enemyNewLeader);
+                        }
                     }
                 }
             }
@@ -260,7 +259,6 @@ namespace ariel {
                     std::cout << ninja->print() << std::endl;
                 }
             }
-
         }
     }
 }
